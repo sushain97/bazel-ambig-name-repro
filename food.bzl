@@ -24,26 +24,44 @@ make_food = rule(
 )
 
 def _make_eater(ctx):
-    food_file = ctx.actions.declare_file("food")
-    ctx.actions.write(food_file, "{}\n".format(ctx.attr.food))
-
     eater_file = ctx.actions.declare_file(ctx.attr.name)
-    ctx.actions.write(eater_file, "", is_executable=True)
+    ctx.actions.write(eater_file, "", is_executable = True)
 
     return [
         EaterInfo(
-            food = food_file,
+            food = ctx.file.food,
         ),
         DefaultInfo(
             executable = eater_file,
             files = depset([eater_file]),
-            runfiles = ctx.runfiles([food_file]),
-        )
+            runfiles = ctx.runfiles([ctx.file.food]),
+        ),
     ]
 
 make_eater = rule(
     _make_eater,
     attrs = {
+        "food": attr.label(mandatory = True, allow_single_file = True),
+    },
+)
+
+def _eater_repository(rctx):
+    rctx.file("WORKSPACE")
+    rctx.file("BUILD", """
+load("@root//:food.bzl", "make_eater")
+
+make_eater(
+    name = "mouth",
+    food = "food",
+    visibility = ["//visibility:public"],
+)
+    """)
+
+    rctx.file("food", "{}\n".format(rctx.attr.food))
+
+eater_repository = repository_rule(
+    _eater_repository,
+    attrs = {
         "food": attr.string(mandatory = True),
-    }
+    },
 )

@@ -1,11 +1,13 @@
 workspace(name = "root")
 
-local_repository(
+load(":food.bzl", "eater_repository")
+
+eater_repository(
     name = "monkey",
-    path = "./monkey",
+    food = "bananas",
 )
 
-local_repository(
+eater_repository(
     name = "cheetah",
-    path = "./cheetah",
+    food = "deer",
 )

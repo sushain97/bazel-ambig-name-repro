@@ -1,7 +1,0 @@
-load("@root//:food.bzl", "make_eater")
-
-make_eater(
-    name = "cheetah",
-    food = "deer",
-    visibility = ["//visibility:public"],
-)

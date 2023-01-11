@@ -3,7 +3,7 @@ load("food.bzl", "make_food")
 make_food(
     name = "food",
     srcs = [
-        "@monkey//:monkey",
-        "@cheetah//:cheetah",
+        "@monkey//:mouth",
+        "@cheetah//:mouth",
     ],
 )
