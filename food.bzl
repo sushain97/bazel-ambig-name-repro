@@ -24,18 +24,8 @@ make_food = rule(
 )
 
 def _make_eater(ctx):
-    eater_file = ctx.actions.declare_file(ctx.attr.name)
-    ctx.actions.write(eater_file, "", is_executable = True)
-
     return [
-        EaterInfo(
-            food = ctx.file.food,
-        ),
-        DefaultInfo(
-            executable = eater_file,
-            files = depset([eater_file]),
-            runfiles = ctx.runfiles([ctx.file.food]),
-        ),
+        EaterInfo(food = ctx.file.food),
     ]
 
 make_eater = rule(
