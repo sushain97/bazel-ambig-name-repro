@@ -1,0 +1,7 @@
+genrule(
+    name = "make-food",
+    srcs = [],
+    outs = ["food"],
+    cmd = "echo bananas > $@",
+    visibility = ["//visibility:public"],
+)
