@@ -1,3 +1,5 @@
+workspace(name = "root")
+
 local_repository(
     name = "monkey",
     path = "./monkey",

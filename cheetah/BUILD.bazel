@@ -1,7 +1,7 @@
-genrule(
-    name = "make-food",
-    srcs = [],
-    outs = ["food"],
-    cmd = "echo deer > $@",
+load("@root//:food.bzl", "make_eater")
+
+make_eater(
+    name = "cheetah",
+    food = "deer",
     visibility = ["//visibility:public"],
 )
